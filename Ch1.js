@@ -167,5 +167,36 @@ function rotateMatrix2(matrix) {
     return matrix;
 }
 
+// 1.8: Zero Matrix
+// Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in-place.
+
+function setZeroes(matrix) {
+    const len = matrix.length;
+    let rows = new Set();
+    let cols = new Set();
+
+    for (let i = 0; i < len; i++) {
+        for (let j = 0; j < matrix[0].length; j++) {
+            if (matrix[i][j] === 0) {
+                rows.add(i);
+                cols.add(j);
+            }
+        }
+    }
+
+    for (let i = 0; i < len; i++) {
+        for (let j = 0; j < matrix[0].length; j++) {
+            if (rows.has(i)) matrix[i][j] = 0;
+        }
+    }
+
+    for (let j = 0; j < matrix[0].length; j++) {
+        for (let i = 0; i < len; i++) {
+            if (cols.has(j)) matrix[i][j] = 0;
+        }
+    }
+
+    return matrix;
+}
 
 
