@@ -199,4 +199,26 @@ function setZeroes(matrix) {
     return matrix;
 }
 
+// 1.9: String Rotation
+// isSubstring method check if one word is a substring of another
+// check if s2 is a rotation of s1 using only one call to isSubstring
+
+// a + a, then call substring on b 
+
+// the following is #796 leetcode (different than 1.9)
+function rotateString(a, b) {
+    if (a.length === 0 && b.length === 0) return true;
+    if (a.length === 0 || b.length === 0) return false;
+
+    for (let i = 0; i < a.length; i++) {
+        if (a === b) return true;
+        const firstEl = a.slice(0, 1);
+        a = a.slice(1) + firstEl;
+    }
+
+    return false;
+};
+
+
+
 
