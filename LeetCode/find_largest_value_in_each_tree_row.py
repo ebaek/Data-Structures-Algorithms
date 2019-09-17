@@ -18,7 +18,6 @@ class TreeNode:
         self.left = None
         self.right = None
 
-
 class Solution:
     def largestValues(self, root: TreeNode) -> List[int]:
         if root == None: return []
