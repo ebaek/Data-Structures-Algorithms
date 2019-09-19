@@ -41,29 +41,29 @@ a = [10,-2,-12,3,-15,-12,2,-11,3,-12,9,12,0,-5,-4,-2,-7,-15,7,4,-5,-14,-15,-15,-
 sol = Solution()
 print(sol.threeSum(a))
 
-# class Solution(object):
-# 	def threeSum(self, nums):
-# 		res = []
-# 		nums.sort()
-# 		length = len(nums)
+class Solution(object):
+	def threeSum(self, nums):
+		res = []
+		nums.sort()
+		length = len(nums)
 
-# 		for i in range(length-2): 
-# 			if nums[i] > 0: break  
-# 			if i > 0 and nums[i] == nums[i-1]: continue
+		for i in range(length-2): 
+			if nums[i] > 0: break  
+			if i > 0 and nums[i] == nums[i-1]: continue
 
-# 			l, r = i+1, length-1
+			l, r = i+1, length-1
    
-# 			while l < r:
-# 				total = nums[i]+nums[l]+nums[r]
+			while l < r:
+				total = nums[i]+nums[l]+nums[r]
 
-# 				if total < 0: l += 1
-# 				elif total > 0: r -= 1
-# 				else: 
-# 					res.append([nums[i], nums[l], nums[r]])
-# 					while l < r and nums[l] == nums[l+1]:
-# 						l += 1
-# 					while l < r and nums[r] == nums[r-1]:
-# 						r -= 1
-# 					l += 1
-# 					r -= 1
-# 		return res
+				if total < 0: l += 1
+				elif total > 0: r -= 1
+				else: 
+					res.append([nums[i], nums[l], nums[r]])
+					while l < r and nums[l] == nums[l+1]:
+						l += 1
+					while l < r and nums[r] == nums[r-1]:
+						r -= 1
+					l += 1
+					r -= 1
+		return res

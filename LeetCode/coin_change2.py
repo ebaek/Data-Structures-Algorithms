@@ -8,7 +8,7 @@ class Solution:
         if amt == 0: return 1
         if len(coins) == 0: return 0
         
-        memo = [[1]+([0]*amt for _ in range(len(coins)))]
+        memo = [[1]+([0]*amt) for _ in range(len(coins))]
         
         for i in range(len(coins)):
             for j in range(1, amt+1):
