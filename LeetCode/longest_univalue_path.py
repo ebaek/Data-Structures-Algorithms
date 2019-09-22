@@ -32,8 +32,7 @@ class Solution:
             if node.right and node.right.val == node.val:
                 rightPathLength = 1 + rightPath
 
-            self.longestPath = max(
-                self.longestPath, leftPathLength + rightPathLength)
+            self.longestPath = max(self.longestPath, leftPathLength + rightPathLength)
             return max(leftPathLength, rightPathLength)
 
         dfs(root)
