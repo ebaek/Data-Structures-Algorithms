@@ -19,3 +19,29 @@ class Solution:
         root.right = self.buildTree(rightPreorder, rightInorder)
         
         return root 
+    
+
+class Solution(object):
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        inorder_dict = {}
+        
+        for idx, num in enumerate(inorder):
+            inorder_dict[num] = idx
+            
+        pre_iter = iter(preorder)
+
+        def helper(start, end):
+            if start > end: return None
+            
+            root_val = next(pre_iter)
+            root = TreeNode(root_val)
+            
+            idx = inorder_dict[root_val]
+            
+            root.left = helper(start, idx-1)
+            root.right = helper(idx+1, end)
+            return root
+
+        return helper(0, len(inorder) - 1)
+
+                
