@@ -7,6 +7,7 @@ class Node:
         self.random = random
 """
 
+from collections import deque
 class Solution:
     def copyRandomList(self, head: 'Node') -> 'Node':
         if not head: return head
@@ -36,3 +37,33 @@ class Solution:
             secondIteration = secondIteration.next
         
         return copy 
+
+# Time Complexity: O(N)
+# Space Complexity: O(N)
+class Solution:
+    def copyRandomList(self, head: 'Node') -> 'Node':
+        if not head: return None
+        pointer = Node(head.val, None, None)
+        dupedNodes = {pointer.val: pointer}
+        q = deque([head])
+
+        dupedNode = None
+
+        def helper(tmpNode):
+            if tmpNode.val not in dupedNodes:
+                dupedNodes[tmpNode.val] = Node(tmpNode.val, None, None)
+            return dupedNodes[tmpNode.val]
+
+        while q:
+            tmpNode = q.popleft()
+
+            dupedNode = helper(tmpNode)
+
+            if tmpNode.next:
+                dupedNode.next = helper(tmpNode.next)
+                q.append(tmpNode.next)
+
+            if tmpNode.random:
+                dupedNode.random = helper(tmpNode.random)
+
+        return pointer
