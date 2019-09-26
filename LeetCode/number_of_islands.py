@@ -1,9 +1,10 @@
 # 200: Number of Islands 
 
+
 class Solution(object):
     def numIslands(self, grid: List[List[str]]) -> int:
         try:
-            width, height = len(grid), len(grid[0])
+            height, width = len(grid), len(grid[0])
         except:
             return 0
 
@@ -15,8 +16,8 @@ class Solution(object):
             return
 
         count = 0
-        for currentX in range(width):
-            for currentY in range(height):
+        for currentX in range(height):
+            for currentY in range(width):
                 if grid[currentX][currentY] == "1":
                     dfs(currentX, currentY, grid)
                     count += 1
