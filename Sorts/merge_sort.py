@@ -17,7 +17,6 @@
 # Notes:
 #  Arrays: elements are contiguous in memory 
 
-
 # Python program for implementation of MergeSort
 def mergeSort(arr):
     if len(arr) > 1:
@@ -49,10 +48,3 @@ def mergeSort(arr):
             arr[currentPointer] = R[rightIdx]
             rightIdx += 1
             currentPointer += 1
-
-# Code to print the list
-
-def printList(arr):
-    for i in range(len(arr)):
-        print(arr[i], end=" ")
-    print()
