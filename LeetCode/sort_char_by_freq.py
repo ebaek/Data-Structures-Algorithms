@@ -24,6 +24,20 @@ class Solution:
 
         return newStr
 
+# another solution using counter
+
+
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        strCounter = Counter(s)
+        orderedCounter = sorted(
+            strCounter.items(), key=lambda pair: pair[1], reverse=False)
+
+        newStr = ""
+        for ch, freq in orderedCounter:
+            newStr = freq*ch + newStr
+
+        return newStr
 
 from collections import Counter
 

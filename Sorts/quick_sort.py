@@ -10,7 +10,7 @@
 
 import random
 # in place
-def quick_sort(list, first, last):
+def quicksort(list, first, last):
     if first >= last: return
 
     left, right = first, last
@@ -26,11 +26,32 @@ def quick_sort(list, first, last):
             left += 1
             right -= 1
             
-    quick_sort(list, first, right)
-    quick_sort(list, left, last)
+    quicksort(list, first, right)
+    quicksort(list, left, last)
 
 
-def quick_sort(list):
+def quicksort_inplace(arr, low=0, high=None):
+    def partition(arr, low, high):
+        pivotPointer = low-1
+        pivot = arr[high]
+
+        for currentPos in range(low, high):
+            if arr[currentPos] <= pivot:
+                pivotPointer += 1
+                arr[pivotPointer], arr[currentPos] = arr[currentPos], arr[pivotPointer]
+
+        arr[pivotPointer+1], arr[high] = arr[high], arr[pivotPointer+1]
+        return pivotPointer+1
+
+    if high == None: high = len(arr)-1
+    if low < high:
+        partitionIdx = partition(arr, low, high)
+        quicksort_inplace(arr, low, partitionIdx-1) # sort lower half
+        quicksort_inplace(arr, partitionIdx+1, high) # sort upper half 
+    
+
+# space inefficient algo
+def quicksort(list):
     if len(list) < 2:
         return list
 
@@ -38,4 +59,9 @@ def quick_sort(list):
     left = filter(lambda x: x <= pivot, list)
     right = filter(lambda x: x > pivot, list)
 
-    return quick_sort(left) + [pivot] + quick_sort(right)
+    return quicksort(left) + [pivot] + quicksort(right)
+
+
+arr = [3,5,2,1,6]
+a = quicksort_inplace(arr)
+print(arr)
