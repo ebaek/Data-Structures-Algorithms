@@ -31,4 +31,27 @@ class Solution:
                 current.child.prev = current
                 current.child = None
         return head
+    
+# Using a stack approach
+class Solution:
+    def flatten(self, head: 'Node') -> 'Node':
+        stack = []
+        subPointer = head
+
+        while subPointer:
+            if subPointer.child:
+                if subPointer.next: stack.append(subPointer.next)
+                subPointer.next = subPointer.child
+                subPointer.child.prev = subPointer
+                subPointer.child = None
+
+            elif not subPointer.next and stack:
+                subPointer.next = stack.pop()
+                subPointer.next.prev = subPointer
+
+            subPointer = subPointer.next
+
+        return head
+
+
 
