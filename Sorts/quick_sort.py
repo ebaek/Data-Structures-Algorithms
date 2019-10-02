@@ -8,26 +8,30 @@
 
 # Time Complexity: O(nlog(n))
 
-import random
-# in place
-def quicksort(list, first, last):
-    if first >= last: return
 
-    left, right = first, last
-    pivot = random.int(left, right)
+def partition(arr, low, high):
+    i = low - 1
+    partition = arr[high]
 
-    while left <= right:
-        while list[left] < pivot:
-            left += 1
-        while list[right] > pivot:
-            right -= 1
-        if left <= right:
-            list[left], list[right] = list[right], list[left]
-            left += 1
-            right -= 1
-            
-    quicksort(list, first, right)
-    quicksort(list, left, last)
+    for j in range(low, high):
+        if arr[j] < arr[high]:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i+1], arr[high] = arr[high], arr[i+1]
+    return i+1
+
+
+def quicksort(arr, low, high):
+    if low < high:
+        pivot = partition(arr, low, high)
+
+        quicksortLeft = quicksort(arr, low, pivot-1)
+        quicksortRight = quicksort(arr, pivot+1, high)
+
+arr = [4, 3, 5, 1, -2, 1]
+quicksorted = quicksort(arr, 0, len(arr)-1)
+print(arr)
 
 
 def quicksort_inplace(arr, low=0, high=None):
