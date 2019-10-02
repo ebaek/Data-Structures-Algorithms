@@ -1,122 +1,68 @@
 # 146: LRU Cache
-# Design and implement a data structure for Least Recently Used (LRU) cache. 
-# It should support the following operations: get and put.
 
-# get(key) - Get the value (will always be positive) of the key if the 
-# key exists in the cache, otherwise return -1.
-
-# put(key, value) - Set or insert the value if the key is not already present. 
-# When the cache reached its capacity, it should invalidate the least recently 
-# used item before inserting a new item.
-
-# The cache is initialized with a positive capacity.
-
-# Approach:
-# For get method:
-# Use a dictionary- if key doesnt exist in cache return -1
-
- 
-# keep a set of all valid keys, if key is nullified remove the key from the set 
-# For put method:
-# check the length of the set
-
-
-class DLinkedNode(): 
-    def __init__(self):
-        self.key = 0
-        self.value = 0
+class ListNode:
+    def __init__(self, val):
+        self.val = val
+        self.key = None
         self.prev = None
         self.next = None
-            
-class LRUCache():
-    def _add_node(self, node):
-        """
-        Always add the new node right after head.
-        """
-        node.prev = self.head
-        node.next = self.head.next
 
-        self.head.next.prev = node
-        self.head.next = node
-
-    def _remove_node(self, node):
-        """
-        Remove an existing node from the linked list.
-        """
-        prev = node.prev
-        new = node.next
-
-        prev.next = new
-        new.prev = prev
-
-    # most frequently used item is at the head, and we would need this when we're 
-    # getting something 
-    def _move_to_head(self, node):
-        """
-        Move certain node in between to the head.
-        """
-        self._remove_node(node)
-        self._add_node(node)
-
-    # least recently used item is at the tail
-    def _pop_tail(self):
-        """
-        Pop the current tail.
-        """
-        res = self.tail.prev
-        self._remove_node(res)
-        return res
-
-    def __init__(self, capacity):
-        """
-        :type capacity: int
-        """
-        self.cache = {}
-        self.size = 0
-        self.capacity = capacity
-        self.head, self.tail = DLinkedNode(), DLinkedNode()
-
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.head = ListNode(None)
+        self.tail = ListNode(None)
+        
         self.head.next = self.tail
         self.tail.prev = self.head
         
+        self.dict = {}
+        
+        self.capacity = capacity 
+        self.currCap = 0
 
-    def get(self, key):
-        """
-        :type key: int
-        :rtype: int
-        """
-        node = self.cache.get(key, None)
-        if not node: return -1
-
-        # move the accessed node to the head;
-        self._move_to_head(node)
-
-        return node.value
-
-    def put(self, key, value):
-        """
-        :type key: int
-        :type value: int
-        :rtype: void
-        """
-        node = self.cache.get(key)
-
-        if not node: 
-            newNode = DLinkedNode()
-            newNode.key = key
-            newNode.value = value
-
-            self.cache[key] = newNode
-            self._add_node(newNode)
-
-            self.size += 1
-
-            if self.size > self.capacity:
-                # pop the tail
-                deletedNode = self._pop_tail()
-                del self.cache[deletedNode.key]
-                self.size -= 1
+    def get(self, key: int) -> int:
+        if key in self.dict: 
+            self.deleteNode(self.dict[key])
+            self.moveToHead(self.dict[key])
+            return self.dict[key].val
+        else: return -1
+    
+    def addNode(self, node):
+        node.prev = self.head
+        node.next = self.head.next
+        
+        self.head.next.prev = node
+        self.head.next = node 
+    
+    def deleteNode(self, node):
+        node.next.prev = node.prev
+        node.prev.next = node.next
+    
+    def moveToHead(self, node):
+        self.deleteNode(node)
+        self.addNode(node)
+        
+    def removeFromTail(self):
+        last = self.tail.prev
+        last.prev.next = self.tail
+        self.tail.prev = last.prev
+        del self.dict[last.key]
+        self.currCap -= 1
+               
+    def put(self, key: int, value: int) -> None:
+        node = None
+        
+        if key in self.dict:
+            node = self.dict[key]
+            node.val = value
+            self.deleteNode(node)
         else:
-            # update the value.
-            node.value = value
-            self._move_to_head(node)
+            node = ListNode(value)
+            node.key = key
+            self.currCap += 1
+        
+        self.dict[key] = node
+        self.addNode(node)
+        
+        if self.currCap > self.capacity:
+            self.removeFromTail()
