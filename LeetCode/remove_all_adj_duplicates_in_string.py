@@ -1,7 +1,3 @@
-
-
-
-
 # 1047: Remove All Adjacent Duplicates In String
 # Time Complexity: O(n)
 
