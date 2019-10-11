@@ -48,3 +48,34 @@ def mergeSort(arr):
             arr[currentPointer] = R[rightIdx]
             rightIdx += 1
             currentPointer += 1
+            
+# with a hlper 
+def mergesort(array_to_be_sorted):
+    if len(array_to_be_sorted) < 2:
+        return array_to_be_sorted
+
+    middle = len(array_to_be_sorted) // 2
+
+    left = array_to_be_sorted[0:middle]
+    right = array_to_be_sorted[middle:]
+
+    return merge(mergesort(left), mergesort(right))
+
+
+def merge(left, right):
+    merge_result = []
+
+    left_index = right_index = 0
+
+    while left_index < len(left) and right_index < len(right):
+        if left[left_index] > right[right_index]:
+            merge_result.append(right[right_index])
+            right_index += 1
+        else:
+            merge_result.append(left[left_index])
+            left_index += 1
+
+    merge_result += left[left_index:]
+    merge_result += right[right_index:]
+
+    return merge_result
