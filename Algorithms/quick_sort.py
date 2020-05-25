@@ -6,7 +6,8 @@
 # goal is to put element at correction position in sorted array
 # and put all smaller elements before element and all greater elements after 
 
-# Time Complexity: O(nlog(n))
+# Average Time Complexity: O(nlog(n))
+# Worst Time Complexity: O(n^2)
 
 
 def partition(arr, low, high):
